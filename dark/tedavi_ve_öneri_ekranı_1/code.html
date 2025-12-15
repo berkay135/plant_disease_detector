@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html class="dark" lang="tr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bitki Tanımlama Ekranı (Koyu Tema)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec25",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102212",
+                        "text-light": "#0d1b0f",
+                        "text-dark": "#e0f1e2",
+                        "card-light": "#ffffff",
+                        "card-dark": "#1a2c1b",
+                        "border-light": "#e7f3e8",
+                        "border-dark": "#2a4b2c",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+      body {
+        min-height: max(844px, 100dvh);}
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark font-display text-text-dark">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<header class="flex items-center p-4 justify-between sticky top-0 z-10">
+<div class="flex size-10 shrink-0 items-center justify-center">
+<span class="material-symbols-outlined text-text-dark text-2xl">arrow_back</span>
+</div>
+<h1 class="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center text-text-dark">Bitkini Tanımla</h1>
+<div class="flex w-10 items-center justify-end">
+<button class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-10 bg-transparent gap-2 text-base font-bold leading-normal tracking-[0.015em] min-w-0 p-0">
+<span class="material-symbols-outlined text-text-dark text-2xl">more_vert</span>
+</button>
+</div>
+</header>
+<main class="flex flex-1 flex-col px-4 pb-4">
+<div class="flex flex-1 flex-col items-center justify-center rounded-xl bg-card-dark border-2 border-dashed border-border-dark overflow-hidden relative">
+<div class="flex flex-col items-center justify-center text-center p-6">
+<span class="material-symbols-outlined text-text-dark/50 text-6xl mb-4">photo_camera</span>
+<p class="text-text-dark/80 font-medium">Net bir fotoğraf çekin</p>
+<p class="text-sm text-text-dark/60 mt-1">Bitkinizin hastalıklı bölümünü<br/>çerçevenin içine alın.</p>
+</div>
+<div class="absolute inset-0 flex items-center justify-center p-8 pointer-events-none">
+<div class="w-full h-full border-2 border-text-dark/30 rounded-lg"></div>
+</div>
+</div>
+<div class="flex items-center justify-between gap-4 pt-6">
+<button class="flex h-16 w-16 items-center justify-center rounded-full bg-card-dark border border-border-dark">
+<span class="material-symbols-outlined text-3xl text-text-dark">photo_library</span>
+</button>
+<button class="flex h-20 w-20 items-center justify-center rounded-full bg-primary p-1">
+<div class="h-full w-full rounded-full border-4 border-background-dark"></div>
+</button>
+<button class="flex h-16 w-16 items-center justify-center rounded-full bg-card-dark border border-border-dark">
+<span class="material-symbols-outlined text-3xl text-text-dark">flip_camera_ios</span>
+</button>
+</div>
+</main>
+</div>
+
+</body></html>

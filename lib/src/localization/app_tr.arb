@@ -1,0 +1,19 @@
+{
+  "appTitle": "Bitki Hastalığı Tespit",
+  "welcomeTitle": "Bitkilerinizi Tanılayın",
+  "welcomeSubtitle": "Bitkinizin fotoğrafını çekin ve yapay zekamızın hastalıkları tespit edip tedavi önerileri sunmasına izin verin.",
+  "createAccount": "Hesap Oluştur",
+  "login": "Giriş Yap",
+  "home": "Ana Sayfa",
+  "diagnose": "Tanıla",
+  "garden": "Bahçem",
+  "settings": "Ayarlar",
+  "accountManagement": "Hesap Yönetimi",
+  "appSettings": "Uygulama Ayarları",
+  "darkMode": "Karanlık Mod",
+  "notifications": "Bildirimler",
+  "language": "Dil",
+  "logout": "Çıkış Yap",
+  "identifyPlant": "Bitkinizi Tanılayın",
+  "history": "Geçmiş"
+}

@@ -1,0 +1,19 @@
+{
+  "appTitle": "Plant Disease Detector",
+  "welcomeTitle": "Identify Your Plants",
+  "welcomeSubtitle": "Take a photo of your plant and let our AI identify diseases and provide treatment suggestions.",
+  "createAccount": "Create Account",
+  "login": "Login",
+  "home": "Home",
+  "diagnose": "Diagnose",
+  "garden": "My Garden",
+  "settings": "Settings",
+  "accountManagement": "Account Management",
+  "appSettings": "App Settings",
+  "darkMode": "Dark Mode",
+  "notifications": "Notifications",
+  "language": "Language",
+  "logout": "Log Out",
+  "identifyPlant": "Identify Your Plant",
+  "history": "History"
+}
