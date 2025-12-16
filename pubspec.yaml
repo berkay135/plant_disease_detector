@@ -44,6 +44,8 @@ dependencies:
   image_picker: ^1.2.1
   tflite_flutter: ^0.12.1
   image: ^4.5.4
+  path_provider: ^2.1.5
+  shared_preferences: ^2.3.3
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +74,8 @@ flutter:
   assets:
     - assets/plant_model.tflite
     - assets/labels.txt
+    - assets/plants.json
+    - assets/models/u2netp_float16.tflite
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

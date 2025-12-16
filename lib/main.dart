@@ -3,8 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:plant_disease_detector/src/core/router/app_router.dart';
 import 'package:plant_disease_detector/src/core/theme/app_theme.dart';
 import 'package:plant_disease_detector/src/core/theme/theme_provider.dart';
+import 'package:plant_disease_detector/src/features/diagnose/data/diagnosis_history.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Load saved diagnosis history
+  await DiagnosisHistory().loadHistory();
+  
   runApp(const ProviderScope(child: PlantDiseaseDetectorApp()));
 }
 

@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:plant_disease_detector/src/core/theme/app_theme.dart';
 import 'package:plant_disease_detector/src/features/diagnose/data/diagnosis_service.dart';
+import 'package:plant_disease_detector/src/features/diagnose/services/background_removal_service.dart';
+import 'package:plant_disease_detector/src/features/diagnose/presentation/processing_loading_screen.dart';
 
 class PlantIdentificationScreen extends StatefulWidget {
   const PlantIdentificationScreen({super.key});
@@ -15,6 +18,7 @@ class PlantIdentificationScreen extends StatefulWidget {
 class _PlantIdentificationScreenState extends State<PlantIdentificationScreen> {
   final ImagePicker _picker = ImagePicker();
   final DiagnosisService _diagnosisService = DiagnosisService();
+  final BackgroundRemovalService _backgroundRemoval = BackgroundRemovalService();
   bool _isProcessing = false;
 
   Future<void> _pickImage(ImageSource source) async {
@@ -27,19 +31,73 @@ class _PlantIdentificationScreenState extends State<PlantIdentificationScreen> {
           _isProcessing = true;
         });
 
-        // Run diagnosis
-        final result = await _diagnosisService.diagnose(image.path);
+        // Start processing in background while showing loading screen
+        File? processedImage;
+        dynamic result;
+        String? errorMessage;
+        
+        // Create a completer to signal when processing is done
+        final processingComplete = Future<void>.delayed(Duration.zero).then((_) async {
+          try {
+            // Remove background to simulate PlantVillage dataset conditions
+            processedImage = await _backgroundRemoval.removeBackground(File(image.path));
+            print('Background removal successful: ${processedImage!.path}');
+          } catch (e) {
+            print('Background removal failed, using original image: $e');
+            processedImage = File(image.path);
+          }
+
+          // Run diagnosis on processed image
+          result = await _diagnosisService.diagnose(processedImage!.path);
+        }).catchError((e) {
+          errorMessage = e.toString();
+        });
+
+        // Show loading screen (non-blocking)
+        if (mounted) {
+          Navigator.of(context).push(
+            PageRouteBuilder(
+              opaque: false,
+              barrierDismissible: false,
+              pageBuilder: (context, _, __) => ProcessingLoadingScreen(
+                onComplete: () {
+                  // Animation completed - we'll wait for processing
+                },
+              ),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                return FadeTransition(opacity: animation, child: child);
+              },
+            ),
+          );
+        }
+
+        // Wait for processing to complete
+        await processingComplete;
+        
+        // Ensure minimum loading time for UX (animation is ~4 seconds)
+        await Future.delayed(const Duration(milliseconds: 500));
 
         if (mounted) {
           setState(() {
             _isProcessing = false;
           });
           
-          // Navigate to result screen with the diagnosis result
-          context.push(
-            '/diagnosis-result',
-            extra: result,
-          );
+          // Close loading screen
+          if (Navigator.of(context).canPop()) {
+            Navigator.of(context).pop();
+          }
+          
+          if (errorMessage != null) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Hata: $errorMessage')),
+            );
+          } else if (result != null) {
+            // Navigate to result screen with the diagnosis result
+            context.push(
+              '/diagnosis-result',
+              extra: result,
+            );
+          }
         }
       }
     } catch (e) {
@@ -47,11 +105,23 @@ class _PlantIdentificationScreenState extends State<PlantIdentificationScreen> {
         setState(() {
           _isProcessing = false;
         });
+        
+        // Close loading screen if it's open
+        if (Navigator.of(context).canPop()) {
+          Navigator.of(context).pop();
+        }
+        
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error processing image: $e')),
+          SnackBar(content: Text('Görüntü işlenirken hata: $e')),
         );
       }
     }
+  }
+
+  @override
+  void dispose() {
+    _backgroundRemoval.dispose();
+    super.dispose();
   }
 
   @override

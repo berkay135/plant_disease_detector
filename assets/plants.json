@@ -1,0 +1,1009 @@
+[
+  {
+    "id": "Apple___Apple_scab",
+    "title": "Elma Kara Lekesi",
+    "description": "Elma ağaçlarında yaygın görülen, yaprak ve meyvelerde koyu lekeler oluşturan ciddi bir mantar hastalığıdır.",
+    "symptoms": [
+      "Yapraklarda zeytin yeşili veya kahverengi kadifemsi lekeler",
+      "Meyvelerde mantarımsı, çatlak lekeler (uyuz görünümü)",
+      "Yaprakların sararması ve erken dökülmesi"
+    ],
+    "treatment": {
+      "natural": [
+        "Enfekte olmuş yaprakları ve meyveleri toplayıp imha edin.",
+        "Hava sirkülasyonunu artırmak için ağacı budayın.",
+        "Erken dönemde Neem yağı veya kükürt bazlı organik spreyler uygulayın."
+      ],
+      "chemical": [
+        "Tomurcuklar patlamadan önce bakırlı ilaçlar (Bordo bulamacı) uygulayın.",
+        "Captan veya Myclobutanil içeren fungisitler kullanın."
+      ]
+    },
+    "care": [
+      "Sonbaharda dökülen yaprakları mutlaka tırmıklayıp uzaklaştırın (mantar kışı orada geçirir).",
+      "Sulama yaparken yaprakları ıslatmaktan kaçının.",
+      "Dayanıklı elma çeşitlerini tercih edin."
+    ],
+    "products": [
+      "Budama makası",
+      "Tırmık",
+      "Neem yağı",
+      "Captan veya Kükürtlü fungisit"
+    ],
+    "severity": "medium",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Apple___Black_rot",
+    "title": "Elma Siyah Çürüklüğü",
+    "description": "Meyvelerin çürümesine, yapraklarda lekelere ve dallarda kanser yaralarına neden olan bir mantar hastalığıdır.",
+    "symptoms": [
+      "Meyve üzerinde sert, siyah ve çürüyen alanlar",
+      "Yapraklarda 'kurbağa gözü' şeklinde (ortası gri, kenarı mor) lekeler",
+      "Dallarda kırmızımsı-kahverengi kanser yaraları"
+    ],
+    "treatment": {
+      "natural": [
+        "Hastalıklı dalları, sağlıklı dokunun 15-20 cm altından kesin.",
+        "Mumyalaşmış (kuruyup dalda kalmış) meyveleri toplayın.",
+        "Yara yerlerini aşı macunu ile kapatın."
+      ],
+      "chemical": [
+        "Captan veya Thiophanate-methyl içeren mantar ilaçları kullanın.",
+        "Gümüş nitrat uygulaması kanser yaralarını temizlemede kullanılabilir."
+      ]
+    },
+    "care": [
+      "Ağaçları stresten uzak tutmak için düzenli sulayın.",
+      "Ölü odunları ve budama artıklarını bahçeden uzaklaştırın."
+    ],
+    "products": [
+      "El testeresi",
+      "Aşı macunu",
+      "Sistemik fungisit"
+    ],
+    "severity": "high",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Apple___Cedar_apple_rust",
+    "title": "Sedir-Elma Pası",
+    "description": "Hayat döngüsünü tamamlamak için hem elma hem de sedir (ardıç) ağacına ihtiyaç duyan bir pas hastalığıdır.",
+    "symptoms": [
+      "Yaprakların üst yüzeyinde parlak turuncu-sarı lekeler",
+      "Yaprak altında tüp benzeri çıkıntılar",
+      "Meyvelerde bozulma ve dökülme"
+    ],
+    "treatment": {
+      "natural": [
+        "Yakındaki sedir veya ardıç ağaçlarındaki gal (yumru) oluşumlarını budayın.",
+        "Mümkünse elma ağacının yakınındaki ardıçları kaldırın."
+      ],
+      "chemical": [
+        "Myclobutanil veya Mancozeb içeren pas ilaçları uygulayın.",
+        "İlaçlamaya çiçek tomurcukları görülünce başlayın."
+      ]
+    },
+    "care": [
+      "Bahçe kurulumunda sedir ve elma ağaçlarını birbirine çok yakın dikmeyin.",
+      "Pas hastalığına dirençli çeşitler ekin."
+    ],
+    "products": [
+      "Budama makası",
+      "Mancozeb içerikli ilaç"
+    ],
+    "severity": "medium",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Apple___healthy",
+    "title": "Sağlıklı Elma",
+    "description": "Elma ağacınız sağlıklı görünüyor, herhangi bir hastalık belirtisi yok.",
+    "symptoms": [],
+    "treatment": {
+      "natural": [],
+      "chemical": []
+    },
+    "care": [
+      "Düzenli sulama ve gübreleme takvimine uyun.",
+      "Yıllık budama yaparak hava akışını sağlayın.",
+      "Zararlı böcek kontrolü için gözlem yapın."
+    ],
+    "products": [
+      "Meyve ağacı gübresi",
+      "Su hortumu"
+    ],
+    "severity": "low",
+    "pathogen_type": "healthy"
+  },
+  {
+    "id": "Blueberry___healthy",
+    "title": "Sağlıklı Yaban Mersini",
+    "description": "Bitkiniz gayet sağlıklı ve canlı görünüyor.",
+    "symptoms": [],
+    "treatment": {
+      "natural": [],
+      "chemical": []
+    },
+    "care": [
+      "Toprağın asidik (pH 4.5-5.5) kalmasını sağlayın.",
+      "Toprak nemini korumak için malçlama (çam iğneleri ile) yapın.",
+      "Düzenli ancak aşırı olmayan sulama yapın."
+    ],
+    "products": [
+      "Asidik toprak düzenleyici",
+      "Çam kabuğu malçı"
+    ],
+    "severity": "low",
+    "pathogen_type": "healthy"
+  },
+  {
+    "id": "Cherry_(including_sour)___Powdery_mildew",
+    "title": "Kiraz Küllemesi",
+    "description": "Yaprakların ve sürgünlerin beyaz bir toz tabakasıyla kaplanmasına neden olan yaygın bir mantar hastalığıdır.",
+    "symptoms": [
+      "Yapraklarda beyaz, pudra benzeri lekeler",
+      "Yaprakların kıvrılması ve büzüşmesi",
+      "Genç sürgünlerde büyüme geriliği"
+    ],
+    "treatment": {
+      "natural": [
+        "1 litre suya 1 yemek kaşığı karbonat ve 1 tatlı kaşığı arap sabunu karıştırıp püskürtün.",
+        "Süt ve su karışımı (1:9 oranında) doğal bir fungisit olarak kullanılabilir."
+      ],
+      "chemical": [
+        "Kükürt bazlı toz veya sıvı ilaçlar kullanın.",
+        "Miklobutanil etken maddeli sistemik ilaçlar uygulayın."
+      ]
+    },
+    "care": [
+      "Ağacın iç kısımlarının güneş alması için budama yapın.",
+      "Azotlu gübreyi aşırı kullanmaktan kaçının (taze sürgünler hastalığa açıktır)."
+    ],
+    "products": [
+      "Karbonat",
+      "Sıvı kükürt",
+      "Püskürtme pompası"
+    ],
+    "severity": "medium",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Cherry_(including_sour)___healthy",
+    "title": "Sağlıklı Kiraz/Vişne",
+    "description": "Kiraz ağacınız sağlıklı durumda, hastalık belirtisi yok.",
+    "symptoms": [],
+    "treatment": {
+      "natural": [],
+      "chemical": []
+    },
+    "care": [
+      "Hasat sonrası meyve artıklarını temizleyin.",
+      "Yaz aylarında düzenli sulama yapın.",
+      "Gövde zamkı oluşumunu kontrol edin."
+    ],
+    "products": [
+      "Genel amaçlı gübre"
+    ],
+    "severity": "low",
+    "pathogen_type": "healthy"
+  },
+  {
+    "id": "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+    "title": "Mısır Gri Yaprak Lekesi",
+    "description": "Mısır verimini düşüren, yapraklarda dikdörtgen gri lekeler oluşturan bir mantar hastalığıdır.",
+    "symptoms": [
+      "Yaprak damarlarına paralel ilerleyen dikdörtgen şeklinde gri/kahverengi lekeler",
+      "Lekelerin birleşerek yaprağı kurutması"
+    ],
+    "treatment": {
+      "natural": [
+        "Hastalığa dayanıklı hibrit tohumlar kullanın.",
+        "Ürün rotasyonu yapın (aynı yere üst üste mısır ekmeyin)."
+      ],
+      "chemical": [
+        "Azoxystrobin veya Propiconazole içeren fungisitler püskürtün.",
+        "Belirtiler ilk görüldüğünde ilaçlama yapılmalıdır."
+      ]
+    },
+    "care": [
+      "Hasat sonrası tarladaki bitki artıklarını derine sürerek gömün.",
+      "Aşırı sık ekimden kaçının."
+    ],
+    "products": [
+      "Tarımsal fungisit",
+      "Pulluk (toprak işleme için)"
+    ],
+    "severity": "medium",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Corn_(maize)___Common_rust_",
+    "title": "Mısır Pası",
+    "description": "Yapraklarda kiremit kırmızısı veya kahverengi püstüller oluşturan fungal bir hastalıktır.",
+    "symptoms": [
+      "Yaprakların her iki yüzeyinde küçük, kabarık, kırmızı-kahverengi lekeler",
+      "İleri evrede yaprakların sararması ve kuruması"
+    ],
+    "treatment": {
+      "natural": [
+        "Erken ekim yaparak hastalığın şiddetli döneminden kaçının.",
+        "Enfekte olmuş alt yaprakları koparıp atın (küçük bahçeler için)."
+      ],
+      "chemical": [
+        "Mancozeb veya Pyraclostrobin içeren ilaçlar kullanın.",
+        "Püskürtme işlemini hastalığın ilk belirtilerinde yapın."
+      ]
+    },
+    "care": [
+      "Dayanıklı mısır çeşitlerini tercih edin.",
+      "Toprağın besin dengesini (özellikle potasyum) koruyun."
+    ],
+    "products": [
+      "Pas ilacı",
+      "Sırt pompası"
+    ],
+    "severity": "medium",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Corn_(maize)___Northern_Leaf_Blight",
+    "title": "Mısır Kuzey Yaprak Yanıklığı",
+    "description": "Serin ve nemli havalarda yayılan, büyük 'puro' şeklinde lekeler yapan bir hastalıktır.",
+    "symptoms": [
+      "Yapraklarda 5-15 cm uzunluğunda, puro şeklinde gri-yeşil lekeler",
+      "Lekelerin zamanla kahverengiye dönmesi"
+    ],
+    "treatment": {
+      "natural": [
+        "Ürün rotasyonu (münavebe) uygulayın.",
+        "Dayanıklı tohum çeşitleri kullanın."
+      ],
+      "chemical": [
+        "Mancozeb, Chlorothalonil veya Strobilurin grubu fungisitler uygulayın."
+      ]
+    },
+    "care": [
+      "Tarlada kalan mısır saplarını parçalayıp toprağa karıştırın, yüzeyde bırakmayın."
+    ],
+    "products": [
+      "Mancozeb fungisit"
+    ],
+    "severity": "high",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Corn_(maize)___healthy",
+    "title": "Sağlıklı Mısır",
+    "description": "Mısır bitkisi sağlıklı, yapraklar yeşil ve canlı.",
+    "symptoms": [],
+    "treatment": {
+      "natural": [],
+      "chemical": []
+    },
+    "care": [
+      "Koçan oluşumu sırasında sulamayı ihmal etmeyin.",
+      "Azotlu gübre desteği sağlayın."
+    ],
+    "products": [
+      "Azot gübresi"
+    ],
+    "severity": "low",
+    "pathogen_type": "healthy"
+  },
+  {
+    "id": "Grape___Black_rot",
+    "title": "Üzüm Siyah Çürüklüğü",
+    "description": "Asmalarda meyvelerin kararıp mumyalaşmasına neden olan yıkıcı bir mantar hastalığıdır.",
+    "symptoms": [
+      "Yapraklarda kenarları koyu, ortası açık kahverengi lekeler",
+      "Üzüm tanelerinin büzüşüp, sertleşip siyahlaşması (mumyalaşma)"
+    ],
+    "treatment": {
+      "natural": [
+        "Kış budamasında hastalıklı dalları ve kurumuş salkımları mutlaka temizleyin.",
+        "Yabani üzüm asmalarını çevreden temizleyin."
+      ],
+      "chemical": [
+        "Mancozeb veya Myclobutanil içeren ilaçlar kullanın.",
+        "Çiçeklenme öncesinden başlayarak düzenli ilaçlama yapın."
+      ]
+    },
+    "care": [
+      "Asmaların güneş ve hava almasını sağlayacak şekilde yaprak seyreltmesi yapın."
+    ],
+    "products": [
+      "Budama makası",
+      "Sistemik mantar ilacı"
+    ],
+    "severity": "high",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Grape___Esca_(Black_Measles)",
+    "title": "Bağ Kavruğu (Esca)",
+    "description": "Asmanın gövdesini içten çürüten ve yapraklarda kaplan çizgisi deseni oluşturan kompleks bir hastalıktır.",
+    "symptoms": [
+      "Yaprak damarları arasında sarı veya kırmızı şeritler (kaplan deseni)",
+      "Üzüm taneleri üzerinde küçük koyu lekeler (kızamık görünümü)",
+      "Asmanın aniden kuruması (apopleksi)"
+    ],
+    "treatment": {
+      "natural": [
+        "Kesin bir tedavisi yoktur; hastalıklı asmayı söküp imha etmek en etkili yoldur.",
+        "Budama aletlerini her kesimden sonra dezenfekte edin."
+      ],
+      "chemical": [
+        "Koruyucu olarak budama yaralarına Trichoderma bazlı biyolojik preparatlar sürün."
+      ]
+    },
+    "care": [
+      "Budama sırasında büyük yaralar açmaktan kaçının.",
+      "Aşırı sulamadan kaçının."
+    ],
+    "products": [
+      "Alkol (dezenfeksiyon için)",
+      "Trichoderma içeren biyolojik ilaç"
+    ],
+    "severity": "critical",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+    "title": "Üzüm Yaprak Yanıklığı",
+    "description": "Genellikle sezon sonuna doğru görülen, yapraklarda köşeli lekeler yapan bir hastalıktır.",
+    "symptoms": [
+      "Yapraklarda kırmızımsı-kahverengi, köşeli lekeler",
+      "Lekelerin etrafında sarı bir hale oluşumu"
+    ],
+    "treatment": {
+      "natural": [
+        "Etkilenen yaprakları toplayın.",
+        "Su stresini azaltmak için düzenli sulama yapın."
+      ],
+      "chemical": [
+        "Genellikle diğer hastalıklar (mildiyö vb.) için atılan ilaçlar bunu da kontrol eder.",
+        "Bakırlı ilaçlar kullanılabilir."
+      ]
+    },
+    "care": [
+      "Bağın havalanmasını iyi sağlayın.",
+      "Yabancı ot mücadelesi yapın."
+    ],
+    "products": [
+      "Bakırlı ilaç"
+    ],
+    "severity": "medium",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Grape___healthy",
+    "title": "Sağlıklı Üzüm",
+    "description": "Asma yaprakları ve salkımları sağlıklı görünüyor.",
+    "symptoms": [],
+    "treatment": {
+      "natural": [],
+      "chemical": []
+    },
+    "care": [
+      "Kış budamasını zamanında yapın.",
+      "Sürgün uçlarını alarak salkımların güçlenmesini sağlayın."
+    ],
+    "products": [
+      "Budama makası"
+    ],
+    "severity": "low",
+    "pathogen_type": "healthy"
+  },
+  {
+    "id": "Orange___Haunglongbing_(Citrus_greening)",
+    "title": "Turunçgil Yeşillenme Hastalığı (HLB)",
+    "description": "Bakteriyel bir hastalık olup, vektör böceklerle taşınır ve tedavisi yoktur; ağacı öldürür.",
+    "symptoms": [
+      "Yapraklarda asimetrik sarı lekeler (benekli görünüm)",
+      "Meyvelerin küçük kalması, şekilsizleşmesi ve yeşil kalması",
+      "Meyve tadının acılaşması"
+    ],
+    "treatment": {
+      "natural": [
+        "Tedavisi yoktur. Enfekte ağaç derhal sökülüp yakılmalıdır.",
+        "Taşıyıcı böcek (psillid) ile biyolojik mücadele yapılmalıdır."
+      ],
+      "chemical": [
+        "Hastalığı tedavi etmez ancak taşıyıcı böcekleri öldürmek için insektisit kullanılır.",
+        "Ağacın ömrünü uzatmak için yaprak gübreleri takviye edilir."
+      ]
+    },
+    "care": [
+      "Sertifikalı, hastalıksız fidan kullanın.",
+      "Psillid böceği popülasyonunu sürekli izleyin."
+    ],
+    "products": [
+      "Böcek ilacı (İnsektisit)",
+      "Yaprak gübresi"
+    ],
+    "severity": "critical",
+    "pathogen_type": "bacterial"
+  },
+  {
+    "id": "Peach___Bacterial_spot",
+    "title": "Şeftali Bakteriyel Leke",
+    "description": "Yapraklarda delikler açan ve meyve kalitesini bozan bakteriyel bir hastalıktır.",
+    "symptoms": [
+      "Yapraklarda morumsu, sonradan delinen küçük lekeler (Saçma deliği)",
+      "Meyve kabuğunda çatlaklar ve sakızımsı akıntı",
+      "Yaprak dökümü"
+    ],
+    "treatment": {
+      "natural": [
+        "Azotlu gübrelemeyi dengeli yapın (aşırı azot hastalığı teşvik eder).",
+        "Dayanıklı şeftali çeşitleri seçin."
+      ],
+      "chemical": [
+        "Sonbaharda yaprak dökümünde ve ilkbaharda tomurcuk döneminde Bakır sülfat (Bordo bulamacı) uygulayın.",
+        "Oksitetrasiklin içeren antibiyotik spreyler (ruhsatlıysa) kullanılabilir."
+      ]
+    },
+    "care": [
+      "Ağaçları rüzgarlı bölgelere dikmekten kaçının (bakteri rüzgarla yayılır).",
+      "Kışın bakırlı preparatlarla koruyucu ilaçlama yapın."
+    ],
+    "products": [
+      "Bakır sülfat",
+      "Püskürtme pompası"
+    ],
+    "severity": "high",
+    "pathogen_type": "bacterial"
+  },
+  {
+    "id": "Peach___healthy",
+    "title": "Sağlıklı Şeftali",
+    "description": "Şeftali ağacınız gayet sağlıklı.",
+    "symptoms": [],
+    "treatment": {
+      "natural": [],
+      "chemical": []
+    },
+    "care": [
+      "Meyve seyreltmesi yaparak kalan meyvelerin irileşmesini sağlayın.",
+      "Kıvrılma hastalığına karşı erken ilkbaharda koruyucu önlem alın."
+    ],
+    "products": [
+      "Meyve ağacı gübresi"
+    ],
+    "severity": "low",
+    "pathogen_type": "healthy"
+  },
+  {
+    "id": "Pepper,_bell___Bacterial_spot",
+    "title": "Biber Bakteriyel Leke",
+    "description": "Biberlerde yaprak dökümüne ve meyve üzerinde lekelere yol açan bakteriyel bir enfeksiyondur.",
+    "symptoms": [
+      "Yapraklarda suyla ıslanmış gibi görünen küçük kahverengi lekeler",
+      "Lekelerin birleşip yaprağı sarartması ve dökmesi",
+      "Meyve üzerinde pütürlü, uyuz benzeri lekeler"
+    ],
+    "treatment": {
+      "natural": [
+        "Hastalıklı yaprakları hemen temizleyin.",
+        "Damla sulama kullanın, üstten sulama yapmayın."
+      ],
+      "chemical": [
+        "Bakır içerikli spreyler (Bakır hidroksit) en etkili koruyucudur.",
+        "Mancozeb ile bakır karışımı bakteriye karşı daha etkilidir."
+      ]
+    },
+    "care": [
+      "Tohumları ekmeden önce dezenfekte edin.",
+      "Biber ektiğiniz yere 2 yıl boyunca domates veya patlıcan ekmeyin (rotasyon)."
+    ],
+    "products": [
+      "Bakırlı ilaç",
+      "Damla sulama seti"
+    ],
+    "severity": "high",
+    "pathogen_type": "bacterial"
+  },
+  {
+    "id": "Pepper,_bell___healthy",
+    "title": "Sağlıklı Biber",
+    "description": "Biber fidesi canlı ve sağlıklı.",
+    "symptoms": [],
+    "treatment": {
+      "natural": [],
+      "chemical": []
+    },
+    "care": [
+      "Destek çubukları ile bitkiyi dik tutun.",
+      "Kalsiyum eksikliğini önlemek için düzenli besleyin."
+    ],
+    "products": [
+      "Destek çubuğu",
+      "Kalsiyum gübresi"
+    ],
+    "severity": "low",
+    "pathogen_type": "healthy"
+  },
+  {
+    "id": "Potato___Early_blight",
+    "title": "Patates Erken Yanıklığı",
+    "description": "Genellikle yaşlı yapraklarda başlayan ve iç içe halkalar şeklinde lekeler oluşturan mantar hastalığıdır.",
+    "symptoms": [
+      "Yapraklarda hedef tahtası gibi iç içe halkalı kahverengi lekeler",
+      "Alt yaprakların sararıp kuruması"
+    ],
+    "treatment": {
+      "natural": [
+        "Bitkiyi güçlendirmek için kompost çayı uygulayın.",
+        "Hasattan sonra tarladaki tüm artıkları temizleyin."
+      ],
+      "chemical": [
+        "Chlorothalonil veya Mancozeb etken maddeli fungisitler kullanın.",
+        "Belirtiler görülür görülmez ilaçlamaya başlayın."
+      ]
+    },
+    "care": [
+      "Bitkileri strese sokmamak için düzenli sulayın ve gübreleyin.",
+      "Dayanıklı çeşitler ekin."
+    ],
+    "products": [
+      "Fungisit"
+    ],
+    "severity": "medium",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Potato___Late_blight",
+    "title": "Patates Mildiyösü (Geç Yanıklık)",
+    "description": "Patates tarihinin en yıkıcı hastalığıdır; serin ve nemli havada hızla yayılır ve bitkiyi çürütür.",
+    "symptoms": [
+      "Yaprak kenarlarında soluk yeşil, sulu lekeler",
+      "Lekelerin hızla kahverengileşip tüm yaprağı öldürmesi",
+      "Yaprak altında nemli havada beyaz küf tabakası"
+    ],
+    "treatment": {
+      "natural": [
+        "Enfekte olan bitkileri hemen söküp torbaya koyarak atın (kompost yapmayın).",
+        "Bakır sülfat (Bordo bulamacı) koruyucu olarak kullanılabilir."
+      ],
+      "chemical": [
+        "Metalaxyl, Cymoxanil veya Mancozeb içeren sistemik fungisitler kullanın.",
+        "Hastalık görülmeden önce koruyucu ilaçlama yapmak en iyisidir."
+      ]
+    },
+    "care": [
+      "Sertifikalı tohumluk patates kullanın.",
+      "Sulamayı sabah saatlerinde yapın ki yapraklar akşama kadar kurusun."
+    ],
+    "products": [
+      "Sistemik Fungisit",
+      "Bakır sülfat"
+    ],
+    "severity": "critical",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Potato___healthy",
+    "title": "Sağlıklı Patates",
+    "description": "Patates bitkisi sağlıklı gelişim gösteriyor.",
+    "symptoms": [],
+    "treatment": {
+      "natural": [],
+      "chemical": []
+    },
+    "care": [
+      "Yumruların yeşillenmemesi için kök boğazını toprakla doldurun.",
+      "Böcek zararlılarını (patates böceği) elle toplayın."
+    ],
+    "products": [
+      "Çapa"
+    ],
+    "severity": "low",
+    "pathogen_type": "healthy"
+  },
+  {
+    "id": "Raspberry___healthy",
+    "title": "Sağlıklı Ahududu",
+    "description": "Ahududu bitkisi canlı ve verimli görünüyor.",
+    "symptoms": [],
+    "treatment": {
+      "natural": [],
+      "chemical": []
+    },
+    "care": [
+      "Meyve vermiş dalları hasattan sonra budayın.",
+      "Kök çürüklüğünü önlemek için drenajı iyi toprak sağlayın."
+    ],
+    "products": [
+      "Budama makası"
+    ],
+    "severity": "low",
+    "pathogen_type": "healthy"
+  },
+  {
+    "id": "Soybean___healthy",
+    "title": "Sağlıklı Soya Fasulyesi",
+    "description": "Soya bitkisi sağlıklı.",
+    "symptoms": [],
+    "treatment": {
+      "natural": [],
+      "chemical": []
+    },
+    "care": [
+      "Yabancı ot kontrolünü düzenli yapın.",
+      "Toprak nemini kontrol edin."
+    ],
+    "products": [],
+    "severity": "low",
+    "pathogen_type": "healthy"
+  },
+  {
+    "id": "Squash___Powdery_mildew",
+    "title": "Kabak Küllemesi",
+    "description": "Kabakgillerde yaprakların un serpilmiş gibi beyazlamasına neden olan çok yaygın bir mantardır.",
+    "symptoms": [
+      "Yaprak yüzeyinde beyaz, tozlu lekeler",
+      "Lekelerin tüm yaprağı kaplaması",
+      "Yaprakların kuruması ve güneşe maruz kalan meyvelerin yanması"
+    ],
+    "treatment": {
+      "natural": [
+        "1 litre suya 1 çorba kaşığı karbonat, 1 tatlı kaşığı sıvı yağ ve sabun karıştırıp sıkın.",
+        "Neem yağı veya süt-su karışımı (1:9) uygulayın."
+      ],
+      "chemical": [
+        "Kükürt toz veya sıvı preparatları uygulayın.",
+        "Myclobutanil veya Triadimefon içeren ilaçlar kullanın."
+      ]
+    },
+    "care": [
+      "Bitkileri sık dikmeyin, hava alsın.",
+      "Gölge alanlara dikim yapmaktan kaçının."
+    ],
+    "products": [
+      "Karbonat",
+      "Kükürt",
+      "Neem yağı"
+    ],
+    "severity": "medium",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Strawberry___Leaf_scorch",
+    "title": "Çilek Yaprak Yanıklığı",
+    "description": "Çilek yapraklarında mor lekelerle başlayan ve yaprağın kavrulmuş gibi görünmesine neden olan bir hastalıktır.",
+    "symptoms": [
+      "Yapraklarda düzensiz, morumsu lekeler",
+      "Lekelerin ortasının zamanla kahverengiye dönmesi",
+      "Yaprak kenarlarının yukarı doğru kıvrılıp kuruması"
+    ],
+    "treatment": {
+      "natural": [
+        "Ağır enfekte olmuş yaprakları koparıp atın.",
+        "Malçlama yaparak yaprakların toprakla temasını kesin."
+      ],
+      "chemical": [
+        "Captan veya Bakır bazlı fungisitler uygulayın.",
+        "Hasat sonrası ve ilkbahar başında ilaçlama yapın."
+      ]
+    },
+    "care": [
+      "Çilekliği 3-4 yılda bir yenileyin.",
+      "Aşırı azotlu gübre vermeyin."
+    ],
+    "products": [
+      "Malç naylonu veya samanı",
+      "Fungisit"
+    ],
+    "severity": "medium",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Strawberry___healthy",
+    "title": "Sağlıklı Çilek",
+    "description": "Çilek bitkisi sağlıklı ve yeşil.",
+    "symptoms": [],
+    "treatment": {
+      "natural": [],
+      "chemical": []
+    },
+    "care": [
+      "Salyangozlara karşı önlem alın.",
+      "Meyvelerin toprağa değmemesi için saman serin."
+    ],
+    "products": [
+      "Saman"
+    ],
+    "severity": "low",
+    "pathogen_type": "healthy"
+  },
+  {
+    "id": "Tomato___Bacterial_spot",
+    "title": "Domates Bakteriyel Leke",
+    "description": "Nemli havalarda yayılan, meyve ve yaprakta koyu lekeler yapan bakteriyel bir hastalıktır.",
+    "symptoms": [
+      "Yapraklarda küçük, siyah, yağlı görünümlü lekeler",
+      "Meyvelerde kabuksu, kahverengi pütürler",
+      "Çiçek dökülmesi"
+    ],
+    "treatment": {
+      "natural": [
+        "Bakır içerikli organik spreyler kullanın.",
+        "Hastalıklı bitki artıklarını bahçeden uzaklaştırın."
+      ],
+      "chemical": [
+        "Bakır hidroksit ve Mancozeb karışımı uygulayın.",
+        "Bakteriyel olduğu için standart mantar ilaçları işe yaramaz, bakır şarttır."
+      ]
+    },
+    "care": [
+      "Tohumları ekmeden önce ılık suda bekleterek dezenfekte edin.",
+      "Damla sulama sistemi kullanın."
+    ],
+    "products": [
+      "Bakırlı preparat",
+      "Damla sulama hortumu"
+    ],
+    "severity": "high",
+    "pathogen_type": "bacterial"
+  },
+  {
+    "id": "Tomato___Early_blight",
+    "title": "Domates Erken Yanıklığı",
+    "description": "Alt yapraklardan başlayıp yukarı doğru ilerleyen, halkalı lekeler yapan yaygın bir mantardır.",
+    "symptoms": [
+      "Yapraklarda iç içe geçmiş halkalar (hedef tahtası) şeklinde kahverengi lekeler",
+      "Yaprakların sararması ve gövdede kuruması",
+      "Meyve sapında siyah çürümeler"
+    ],
+    "treatment": {
+      "natural": [
+        "Alt yaprakları budayarak topraktan sıçramayı önleyin.",
+        "Toprağı malçlayın (saman veya naylon ile örtün).",
+        "Karbonatlı su karışımı püskürtün."
+      ],
+      "chemical": [
+        "Chlorothalonil, Mancozeb veya Bakır sülfat içeren ilaçlar kullanın.",
+        "Hastalık görülmeden koruyucu ilaçlama yapmak etkilidir."
+      ]
+    },
+    "care": [
+      "Domatesleri herek veya iple bağlayarak yerle temasını kesin.",
+      "Her yıl aynı yere domates dikmeyin."
+    ],
+    "products": [
+      "Domates askı ipi",
+      "Malç",
+      "Mancozeb"
+    ],
+    "severity": "medium",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Tomato___Late_blight",
+    "title": "Domates Mildiyösü",
+    "description": "Domatesin en tehlikeli hastalığıdır; serin ve nemli havada bitkiyi günleriçinde öldürebilir.",
+    "symptoms": [
+      "Yapraklarda büyük, şekilsiz, koyu kahverengi/siyah lekeler",
+      "Lekelerin etrafında soluk yeşil haleler",
+      "Gövdede siyahlaşma ve meyvede sert çürükler"
+    ],
+    "treatment": {
+      "natural": [
+        "Enfekte olmuş bitkiyi derhal söküp kapalı bir poşette çöpe atın.",
+        "Koruyucu olarak düzenli bakır uygulaması yapın."
+      ],
+      "chemical": [
+        "Metalaxyl, Cymoxanil veya Dimethomorph içeren sistemik ilaçlar kullanın.",
+        "İlaçlama yaprakların altını da kapsayacak şekilde yapılmalıdır."
+      ]
+    },
+    "care": [
+      "Yaprakların akşamları kuru kalmasını sağlayın.",
+      "Hava sirkülasyonu için bitkiler arası mesafeyi geniş tutun."
+    ],
+    "products": [
+      "Sistemik Fungisit",
+      "Püskürtme pompası"
+    ],
+    "severity": "critical",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Tomato___Leaf_Mold",
+    "title": "Domates Yaprak Küfü",
+    "description": "Genellikle seralarda veya yüksek nemli alanlarda görülen, yaprak altında küf oluşturan bir hastalıktır.",
+    "symptoms": [
+      "Yaprakların üst yüzeyinde soluk sarı lekeler",
+      "Yaprakların alt yüzeyinde zeytin yeşili/kahverengi kadifemsi küf",
+      "Yaprakların zamanla kıvrılıp kuruması"
+    ],
+    "treatment": {
+      "natural": [
+        "Sera havalandırmasını artırarak nemi düşürün (%85 altına).",
+        "Hastalıklı yaprakları dikkatlice koparın."
+      ],
+      "chemical": [
+        "Chlorothalonil veya Bakır bazlı fungisitler kullanın.",
+        "Kükürt uygulaması da etkili olabilir."
+      ]
+    },
+    "care": [
+      "Dayanıklı domates çeşitleri seçin.",
+      "Bitkileri çok sık dikmeyin."
+    ],
+    "products": [
+      "Bakırlı ilaç",
+      "Kükürt"
+    ],
+    "severity": "medium",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Tomato___Septoria_leaf_spot",
+    "title": "Septorya Yaprak Lekesi",
+    "description": "Alt yapraklarda çok sayıda küçük, ortası gri lekeler oluşturan yıkıcı bir mantardır.",
+    "symptoms": [
+      "Yapraklarda çok sayıda küçük, yuvarlak lekeler",
+      "Lekelerin ortası gri/beyaz, kenarları koyu siyahtır",
+      "Yaprakların sararıp dökülmesi, gövdenin çıplak kalması"
+    ],
+    "treatment": {
+      "natural": [
+        "Hastalıklı yaprakları hemen toplayın.",
+        "Topraktan spor sıçramasını önlemek için malçlama yapın."
+      ],
+      "chemical": [
+        "Chlorothalonil veya Mancozeb en etkili kimyasallardır.",
+        "Hastalık belirtisi görülür görülmez 7-10 günde bir ilaçlayın."
+      ]
+    },
+    "care": [
+      "Bahçedeki yabani otları temizleyin (konukçu olabilirler).",
+      "Su sıçratmadan sulama yapın."
+    ],
+    "products": [
+      "Malç",
+      "Mancozeb"
+    ],
+    "severity": "medium",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Tomato___Spider_mites Two-spotted_spider_mite",
+    "title": "Kırmızı Örümcek (İki Noktalı)",
+    "description": "Gözle zor görülen, yaprak özsuyunu emerek bitkiyi sarartan küçük akarlardır.",
+    "symptoms": [
+      "Yapraklarda iğne ucu büyüklüğünde sarı benekler",
+      "Yaprakların renginin matlaşması ve bronzlaşması",
+      "İleri vakalarda yaprak altında ince ağlar"
+    ],
+    "treatment": {
+      "natural": [
+        "Yaprakların altına tazyikli su tutarak böcekleri uzaklaştırın.",
+        "Neem yağı veya böcek öldürücü sabun (arap sabunu karışımı) uygulayın.",
+        "Uğur böceği gibi faydalı böcekleri bahçeye çekin."
+      ],
+      "chemical": [
+        "Abamectin, Spiromesifen veya Etoxazole içeren akarisitler kullanın.",
+        "Sürekli aynı ilacı kullanmayın, bağışıklık kazanırlar."
+      ]
+    },
+    "care": [
+      "Kırmızı örümcekler kuru ve sıcak havayı sever; ortamı hafif nemli tutun.",
+      "Yabancı ot temizliği yapın."
+    ],
+    "products": [
+      "Akarisit (Örümcek ilacı)",
+      "Neem yağı"
+    ],
+    "severity": "medium",
+    "pathogen_type": "pest"
+  },
+  {
+    "id": "Tomato___Target_Spot",
+    "title": "Domates Hedef Leke",
+    "description": "Hem yaprakta hem meyvede hedef tahtası benzeri halkalı lekeler yapan mantari bir hastalıktır.",
+    "symptoms": [
+      "Yapraklarda kahverengi, halkalı (hedef tahtası gibi) lekeler",
+      "Meyvelerde çökük, çatlaklı lekelenmeler"
+    ],
+    "treatment": {
+      "natural": [
+        "Hava akışını artırın, nemi azaltın.",
+        "Hastalıklı kısımları temizleyin."
+      ],
+      "chemical": [
+        "Azoxystrobin veya Chlorothalonil içeren fungisitler kullanın."
+      ]
+    },
+    "care": [
+      "Bitki artıklarını sezon sonunda yok edin.",
+      "Ekim nöbeti (rotasyon) uygulayın."
+    ],
+    "products": [
+      "Fungisit"
+    ],
+    "severity": "medium",
+    "pathogen_type": "fungal"
+  },
+  {
+    "id": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+    "title": "Domates Sarı Yaprak Kıvırcıklığı Virüsü",
+    "description": "Beyaz sineklerle taşınan, bitkinin büyümesini durduran ve verimi yok eden viral bir hastalıktır.",
+    "symptoms": [
+      "Yaprak kenarlarının yukarı doğru kıvrılması ve kaşık şeklini alması",
+      "Yaprakların sararması (kloroz)",
+      "Bitkinin bodur kalması ve meyve vermemesi"
+    ],
+    "treatment": {
+      "natural": [
+        "Virüsün tedavisi yoktur. Hasta bitkiyi hemen söküp imha edin.",
+        "Beyaz sinek mücadelesi için sarı yapışkan tuzaklar kullanın."
+      ],
+      "chemical": [
+        "Virüsü öldüren ilaç yoktur.",
+        "Beyaz sinekleri kontrol etmek için Imidacloprid veya Acetamiprid içeren insektisitler kullanılabilir."
+      ]
+    },
+    "care": [
+      "Vektör olan beyaz sineklerle mücadele edin.",
+      "Virüse dayanıklı (TYLCV) tohum çeşitleri kullanın."
+    ],
+    "products": [
+      "Sarı yapışkan tuzak",
+      "İnsektisit"
+    ],
+    "severity": "critical",
+    "pathogen_type": "viral"
+  },
+  {
+    "id": "Tomato___Tomato_mosaic_virus",
+    "title": "Domates Mozaik Virüsü",
+    "description": "Yapraklarda açık ve koyu yeşil mozaik desenleri oluşturan, çok bulaşıcı bir virüstür.",
+    "symptoms": [
+      "Yapraklarda mozaik şeklinde renk değişimleri (alaca görünüm)",
+      "Yaprakların şekil değiştirmesi (eğrelti otu gibi olması)",
+      "Meyvelerde iç kararması"
+    ],
+    "treatment": {
+      "natural": [
+        "Tedavisi yoktur. Enfekte bitkiyi söküp yakın.",
+        "Sigara içenler ellerini yıkamadan bitkilere dokunmamalıdır (tütün virüsü taşıyabilir)."
+      ],
+      "chemical": [
+        "Kimyasal tedavisi yoktur."
+      ]
+    },
+    "care": [
+      "Bahçe aletlerini her kullanımdan sonra çamaşır suyu ile dezenfekte edin.",
+      "Virüse dayanıklı tohum kullanın."
+    ],
+    "products": [
+      "Çamaşır suyu (dezenfeksiyon için)"
+    ],
+    "severity": "critical",
+    "pathogen_type": "viral"
+  },
+  {
+    "id": "Tomato___healthy",
+    "title": "Sağlıklı Domates",
+    "description": "Domates bitkiniz harika görünüyor, hastalık yok.",
+    "symptoms": [],
+    "treatment": {
+      "natural": [],
+      "chemical": []
+    },
+    "care": [
+      "Koltuk alma (filiz temizliği) işlemini düzenli yapın.",
+      "Düzenli sulama yaparak meyve çatlamasını önleyin.",
+      "Hasat döneminde potasyum ağırlıklı gübre verin."
+    ],
+    "products": [
+      "Potasyum gübresi",
+      "Budama makası"
+    ],
+    "severity": "low",
+    "pathogen_type": "healthy"
+  }
+]

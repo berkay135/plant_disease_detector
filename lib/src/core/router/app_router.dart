@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:plant_disease_detector/src/features/auth/presentation/welcome_screen.dart';
 import 'package:plant_disease_detector/src/features/diagnose/presentation/plant_identification_screen.dart';
 import 'package:plant_disease_detector/src/features/diagnose/presentation/diagnosis_result_screen.dart';
+import 'package:plant_disease_detector/src/features/diagnose/presentation/treatment_screen.dart';
+import 'package:plant_disease_detector/src/features/diagnose/data/plant_disease_info.dart';
 import 'package:plant_disease_detector/src/features/home/presentation/home_screen.dart';
 import 'package:plant_disease_detector/src/features/settings/presentation/settings_screen.dart';
 
@@ -27,6 +29,16 @@ final routerProvider = Provider<GoRouter>((ref) {
             imagePath: extra['imagePath'],
             label: extra['label'],
             confidence: extra['confidence'],
+          );
+        },
+      ),
+      GoRoute(
+        path: '/treatment',
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>;
+          return TreatmentScreen(
+            imagePath: extra['imagePath'],
+            diseaseInfo: extra['diseaseInfo'] as PlantDiseaseInfo,
           );
         },
       ),
