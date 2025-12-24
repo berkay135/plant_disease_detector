@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:plant_disease_detector/src/core/storage/local_storage_service.dart';
 import 'package:plant_disease_detector/src/features/diagnose/data/plant_disease_info.dart';
 import 'package:plant_disease_detector/src/features/diagnose/data/plant_disease_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -56,14 +58,52 @@ class DiagnosisHistory extends ChangeNotifier {
     if (_isLoaded) return;
     
     try {
+      final repository = PlantDiseaseRepository();
+      final existingIds = <String>{};
+      
+      // First load from Hive (new system - cloud synced items)
+      try {
+        final historyBox = LocalStorageService.historyBox;
+        final hiveItems = historyBox.values.toList();
+        print('📂 Loading ${hiveItems.length} items from Hive...');
+        
+        for (final item in hiveItems) {
+          final diseaseInfo = await repository.getDiseaseById(item.diseaseId);
+          if (diseaseInfo != null) {
+            // Check if local file exists, otherwise use cloud URL
+            String imagePath = '';
+            if (item.localImagePath.isNotEmpty) {
+              final localFile = File(item.localImagePath);
+              if (await localFile.exists()) {
+                imagePath = item.localImagePath;
+              } else if (item.cloudImageUrl != null && item.cloudImageUrl!.isNotEmpty) {
+                imagePath = item.cloudImageUrl!;
+              }
+            } else if (item.cloudImageUrl != null && item.cloudImageUrl!.isNotEmpty) {
+              imagePath = item.cloudImageUrl!;
+            }
+            
+            _history.add(DiagnosisHistoryItem(
+              imagePath: imagePath,
+              label: item.label,
+              confidence: item.confidence,
+              diseaseInfo: diseaseInfo,
+              timestamp: item.createdAt,
+            ));
+            existingIds.add(item.id);
+          }
+        }
+      } catch (e) {
+        print('⚠️ Hive loading failed: $e');
+      }
+      
+      // Then load from SharedPreferences (legacy system)
       final prefs = await SharedPreferences.getInstance();
       final historyJson = prefs.getStringList(_storageKey) ?? [];
       
-      print('📂 Loading ${historyJson.length} items from storage...');
+      print('📂 Loading ${historyJson.length} items from SharedPreferences...');
       
       if (historyJson.isNotEmpty) {
-        final repository = PlantDiseaseRepository();
-        
         for (final jsonString in historyJson) {
           try {
             final json = jsonDecode(jsonString) as Map<String, dynamic>;
@@ -79,9 +119,12 @@ class DiagnosisHistory extends ChangeNotifier {
             print('⚠️ Failed to parse history item: $e');
           }
         }
-        
-        print('✅ Loaded ${_history.length} items successfully');
       }
+      
+      // Sort by timestamp (newest first)
+      _history.sort((a, b) => b.timestamp.compareTo(a.timestamp));
+      
+      print('✅ Loaded ${_history.length} items successfully');
       
       _isLoaded = true;
       notifyListeners();
@@ -137,5 +180,12 @@ class DiagnosisHistory extends ChangeNotifier {
              item.diseaseInfo.description.toLowerCase().contains(lowerQuery) ||
              item.label.toLowerCase().contains(lowerQuery);
     }).toList();
+  }
+  
+  /// Force reload history from storage (after sync)
+  Future<void> reloadHistory() async {
+    _history.clear();
+    _isLoaded = false;
+    await loadHistory();
   }
 }

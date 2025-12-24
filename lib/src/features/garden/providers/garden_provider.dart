@@ -35,11 +35,10 @@ class GardenState {
 
 /// Garden state notifier
 class GardenNotifier extends Notifier<GardenState> {
-  late final GardenService _service;
+  GardenService get _service => ref.read(gardenServiceProvider);
   
   @override
   GardenState build() {
-    _service = ref.watch(gardenServiceProvider);
     // Load plants immediately (synchronous from Hive)
     final user = ref.read(currentUserProvider);
     final plants = _service.getPlants(userId: user?.id);

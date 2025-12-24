@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:plant_disease_detector/src/core/theme/app_theme.dart';
+import 'package:plant_disease_detector/src/core/widgets/cached_image.dart';
 import 'package:plant_disease_detector/src/features/diagnose/data/plant_disease_info.dart';
 
 class TreatmentScreen extends StatefulWidget {
@@ -74,8 +75,8 @@ class _TreatmentScreenState extends State<TreatmentScreen> {
                         borderRadius: BorderRadius.circular(16),
                         child: AspectRatio(
                           aspectRatio: 4 / 3,
-                          child: Image.file(
-                            File(widget.imagePath),
+                          child: CachedImage(
+                            imagePath: widget.imagePath,
                             fit: BoxFit.cover,
                           ),
                         ),

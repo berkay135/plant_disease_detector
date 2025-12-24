@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:plant_disease_detector/src/core/widgets/cached_image.dart';
 import 'package:plant_disease_detector/src/features/garden/providers/garden_provider.dart';
 import 'package:plant_disease_detector/src/features/garden/data/plant_model.dart';
 
@@ -53,19 +54,13 @@ class _PlantDetailScreenState extends ConsumerState<PlantDetailScreen> {
                   shadows: [Shadow(blurRadius: 8, color: Colors.black54)],
                 ),
               ),
-              background: plant.localImagePath != null
-                  ? Image.file(
-                      File(plant.localImagePath!),
+              background: plant.localImagePath != null || plant.imageUrl != null
+                  ? CachedImage(
+                      imagePath: plant.localImagePath ?? plant.imageUrl!,
                       fit: BoxFit.cover,
                       errorBuilder: (_, __, ___) => _buildPlaceholder(theme),
                     )
-                  : plant.imageUrl != null
-                      ? Image.network(
-                          plant.imageUrl!,
-                          fit: BoxFit.cover,
-                          errorBuilder: (_, __, ___) => _buildPlaceholder(theme),
-                        )
-                      : _buildPlaceholder(theme),
+                  : _buildPlaceholder(theme),
             ),
             actions: [
               PopupMenuButton(

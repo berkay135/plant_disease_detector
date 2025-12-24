@@ -47,6 +47,10 @@ dependencies:
   path_provider: ^2.1.5
   shared_preferences: ^2.3.3
   
+  # HTTP client for image caching
+  http: ^1.2.0
+  crypto: ^3.0.3
+  
   # Supabase
   supabase_flutter: ^2.8.4
   

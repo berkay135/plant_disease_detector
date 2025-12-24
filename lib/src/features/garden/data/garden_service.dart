@@ -327,14 +327,19 @@ class GardenService {
   /// Sync all plants from cloud (for new device)
   Future<int> syncFromCloud(String userId) async {
     try {
+      print('🔄 Syncing plants from cloud for user: $userId');
+      
       // Fetch plants
       final cloudPlants = await _supabase
           .from('plants')
           .select()
           .eq('user_id', userId);
       
+      print('📦 Found ${cloudPlants.length} plants in cloud');
+      
       int newCount = 0;
       final localIds = plantsBox.values.map((p) => p.id).toSet();
+      print('📱 Local plants: ${localIds.length}');
       
       for (var json in cloudPlants) {
         final plantId = json['id'] as String;
@@ -342,6 +347,7 @@ class GardenService {
           final plant = PlantModel.fromSupabase(json);
           await plantsBox.add(plant);
           newCount++;
+          print('✅ Downloaded plant: ${plant.name}');
         }
       }
       
@@ -351,20 +357,63 @@ class GardenService {
           .select()
           .eq('user_id', userId);
       
+      print('📝 Found ${cloudNotes.length} notes in cloud');
+      
       final localNoteIds = notesBox.values.map((n) => n.id).toSet();
       
+      int newNoteCount = 0;
       for (var json in cloudNotes) {
         final noteId = json['id'] as String;
         if (!localNoteIds.contains(noteId)) {
           final note = PlantNote.fromSupabase(json);
           await notesBox.add(note);
+          newNoteCount++;
         }
       }
       
-      print('✅ Synced $newCount plants from cloud');
+      print('✅ Synced $newCount plants, $newNoteCount notes from cloud');
       return newCount;
-    } catch (e) {
+    } catch (e, stackTrace) {
       print('⚠️ Sync from cloud failed: $e');
+      print('Stack trace: $stackTrace');
+      return 0;
+    }
+  }
+  
+  /// Sync all unsynced plants to cloud
+  Future<int> syncUnsyncedToCloud(String userId) async {
+    try {
+      final unsyncedPlants = plantsBox.values
+          .where((p) => !p.isSynced && p.userId == userId)
+          .toList();
+      
+      int syncedCount = 0;
+      for (final plant in unsyncedPlants) {
+        try {
+          await _syncPlantToCloud(plant);
+          syncedCount++;
+        } catch (e) {
+          print('⚠️ Failed to sync plant ${plant.name}: $e');
+        }
+      }
+      
+      // Sync unsynced notes
+      final unsyncedNotes = notesBox.values
+          .where((n) => !n.isSynced && n.userId == userId)
+          .toList();
+      
+      for (final note in unsyncedNotes) {
+        try {
+          await _syncNoteToCloud(note);
+        } catch (e) {
+          print('⚠️ Failed to sync note ${note.id}: $e');
+        }
+      }
+      
+      print('✅ Synced $syncedCount plants to cloud');
+      return syncedCount;
+    } catch (e) {
+      print('⚠️ Sync to cloud failed: $e');
       return 0;
     }
   }

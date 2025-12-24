@@ -8,6 +8,7 @@ import 'package:plant_disease_detector/src/core/theme/theme_provider.dart';
 import 'package:plant_disease_detector/src/core/storage/local_storage_service.dart';
 import 'package:plant_disease_detector/src/core/supabase/supabase_config.dart';
 import 'package:plant_disease_detector/src/core/services/notification_service.dart';
+import 'package:plant_disease_detector/src/core/services/image_cache_service.dart';
 import 'package:plant_disease_detector/src/features/diagnose/data/diagnosis_history.dart';
 
 void main() async {
@@ -18,6 +19,9 @@ void main() async {
   
   // Initialize local storage (Hive)
   await LocalStorageService.initialize();
+  
+  // Initialize image cache service
+  await ImageCacheService().initialize();
   
   // Initialize notification service
   await NotificationService().initialize();

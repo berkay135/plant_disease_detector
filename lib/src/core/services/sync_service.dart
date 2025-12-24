@@ -5,6 +5,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:plant_disease_detector/src/core/storage/local_storage_service.dart';
 import 'package:plant_disease_detector/src/core/supabase/supabase_config.dart';
 import 'package:plant_disease_detector/src/core/services/image_compress_service.dart';
+import 'package:plant_disease_detector/src/features/garden/data/garden_service.dart';
+import 'package:plant_disease_detector/src/features/garden/providers/garden_provider.dart';
+import 'package:plant_disease_detector/src/features/diagnose/data/diagnosis_history.dart';
 
 /// Service for syncing data between local storage and Supabase
 class SyncService {
@@ -99,6 +102,8 @@ class SyncService {
     }
     
     try {
+      print('🔄 Syncing diagnosis history from cloud for user: $userId');
+      
       // Fetch all items for this user from cloud
       final cloudItems = await _supabase
         .from('diagnosis_history')
@@ -106,10 +111,13 @@ class SyncService {
         .eq('user_id', userId)
         .order('created_at', ascending: false);
       
+      print('📦 Found ${cloudItems.length} diagnosis items in cloud');
+      
       final historyBox = LocalStorageService.historyBox;
       
       // Get existing local item IDs
       final localIds = historyBox.values.map((e) => e.id).toSet();
+      print('📱 Local diagnosis items: ${localIds.length}');
       
       int newItemsCount = 0;
       
@@ -121,17 +129,20 @@ class SyncService {
           final item = DiagnosisHistoryItemCache.fromSupabase(json);
           await historyBox.add(item);
           newItemsCount++;
-          print('✅ Downloaded item: $itemId');
+          print('✅ Downloaded diagnosis: $itemId');
         }
       }
+      
+      print('✅ Synced $newItemsCount diagnosis items from cloud');
       
       return SyncResult(
         success: true,
         syncedCount: newItemsCount,
         message: 'Buluttan $newItemsCount yeni öğe indirildi',
       );
-    } catch (e) {
+    } catch (e, stackTrace) {
       print('❌ Failed to sync from cloud: $e');
+      print('Stack trace: $stackTrace');
       return SyncResult(success: false, message: 'Bulut senkronizasyonu başarısız: $e');
     }
   }
@@ -144,11 +155,20 @@ class SyncService {
     // Then, download any new items from cloud
     final downloadResult = await syncFromCloud(userId);
     
+    // Sync garden plants
+    final gardenService = GardenService();
+    final gardenUploadCount = await gardenService.syncUnsyncedToCloud(userId);
+    final gardenDownloadCount = await gardenService.syncFromCloud(userId);
+    
+    final totalSynced = uploadResult.syncedCount + downloadResult.syncedCount + gardenUploadCount + gardenDownloadCount;
+    final totalUploaded = uploadResult.syncedCount + gardenUploadCount;
+    final totalDownloaded = downloadResult.syncedCount + gardenDownloadCount;
+    
     return SyncResult(
       success: uploadResult.success && downloadResult.success,
-      syncedCount: uploadResult.syncedCount + downloadResult.syncedCount,
+      syncedCount: totalSynced,
       failedCount: uploadResult.failedCount + downloadResult.failedCount,
-      message: 'Yüklenen: ${uploadResult.syncedCount}, İndirilen: ${downloadResult.syncedCount}',
+      message: 'Yüklenen: $totalUploaded, İndirilen: $totalDownloaded',
     );
   }
   
@@ -241,6 +261,12 @@ class SyncNotifier extends Notifier<SyncState> {
     
     final syncService = ref.read(syncServiceProvider);
     final result = await syncService.fullSync(userId);
+    
+    // Refresh garden provider to show new plants
+    ref.invalidate(gardenProvider);
+    
+    // Reload diagnosis history to show new items
+    await DiagnosisHistory().reloadHistory();
     
     state = SyncState(
       status: result.success ? SyncStatus.success : SyncStatus.error,

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:plant_disease_detector/src/core/widgets/cached_image.dart';
 import 'package:plant_disease_detector/src/features/garden/providers/garden_provider.dart';
 import 'package:plant_disease_detector/src/features/garden/data/plant_model.dart';
 
@@ -172,15 +173,9 @@ class _PlantCard extends ConsumerWidget {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  if (plant.localImagePath != null)
-                    Image.file(
-                      File(plant.localImagePath!),
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => _buildPlaceholder(theme),
-                    )
-                  else if (plant.imageUrl != null)
-                    Image.network(
-                      plant.imageUrl!,
+                  if (plant.localImagePath != null || plant.imageUrl != null)
+                    CachedImage(
+                      imagePath: plant.localImagePath ?? plant.imageUrl!,
                       fit: BoxFit.cover,
                       errorBuilder: (_, __, ___) => _buildPlaceholder(theme),
                     )

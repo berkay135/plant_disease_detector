@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:plant_disease_detector/src/features/diagnose/data/diagnosis_history.dart';
+import 'package:plant_disease_detector/src/core/widgets/cached_image.dart';
 import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -300,8 +301,8 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: Image.file(
-                File(item.imagePath),
+              child: CachedImage(
+                imagePath: item.imagePath,
                 width: 60,
                 height: 60,
                 fit: BoxFit.cover,

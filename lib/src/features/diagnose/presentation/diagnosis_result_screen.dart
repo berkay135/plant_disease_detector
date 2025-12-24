@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:plant_disease_detector/src/core/theme/app_theme.dart';
+import 'package:plant_disease_detector/src/core/widgets/cached_image.dart';
 import 'package:plant_disease_detector/src/core/services/diagnosis_save_service.dart';
 import 'package:plant_disease_detector/src/features/auth/providers/auth_provider.dart';
 import 'package:plant_disease_detector/src/features/diagnose/data/plant_disease_info.dart';
@@ -136,8 +137,8 @@ class _DiagnosisResultScreenState extends ConsumerState<DiagnosisResultScreen> {
                               borderRadius: BorderRadius.circular(16),
                               child: AspectRatio(
                                 aspectRatio: 4 / 3,
-                                child: Image.file(
-                                  File(widget.imagePath),
+                                child: CachedImage(
+                                  imagePath: widget.imagePath,
                                   fit: BoxFit.cover,
                                 ),
                               ),
