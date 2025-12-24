@@ -1,31 +1,86 @@
 import 'dart:io';
 import 'dart:math' as math;
+import 'dart:typed_data';
 import 'package:image/image.dart' as img;
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter/services.dart' show rootBundle;
+
+/// Result of background removal operation
+class BackgroundRemovalResult {
+  final File processedImage;
+  final double foregroundRatio; // 0.0 - 1.0
+  final bool usedOriginal; // true if original was used due to high foreground ratio
+  
+  BackgroundRemovalResult({
+    required this.processedImage,
+    required this.foregroundRatio,
+    this.usedOriginal = false,
+  });
+}
 
 class BackgroundRemovalService {
   Interpreter? _interpreter;
   bool _isInitialized = false;
+  int _outputCount = 0;
+  
+  /// Minimum foreground ratio before falling back to original image
+  /// If less than 40% is detected as foreground (i.e., more than 60% removed as background),
+  /// the model likely removed too much and we should use the original image
+  static const double minForegroundRatio = 0.40;
 
   /// Initialize the U2-Net model for background removal
   Future<void> initialize() async {
     if (_isInitialized) return;
 
     try {
-      print('Loading U2-Net model for background removal...');
-      _interpreter = await Interpreter.fromAsset('models/u2netp_float16.tflite');
+      print('🔄 Loading U2-Net model...');
+      
+      // Load model from assets as bytes first
+      final modelBytes = await rootBundle.load('assets/models/u2netp_float16.tflite');
+      final modelBuffer = modelBytes.buffer.asUint8List();
+      print('   Model loaded: ${modelBuffer.length} bytes');
+      
+      // Create interpreter options
+      final options = InterpreterOptions()..threads = 4;
+      
+      // Create interpreter from buffer
+      _interpreter = Interpreter.fromBuffer(modelBuffer, options: options);
+      
+      // Allocate tensors
+      _interpreter!.allocateTensors();
+      
       _isInitialized = true;
-      print('U2-Net model loaded successfully!');
-    } catch (e) {
-      print('Warning: U2-Net model not found. Using fallback method.');
-      print('Error: $e');
-      // Model yoksa fallback yöntemi kullanılacak
+      print('✅ U2-Net model initialized successfully');
+      
+      // Print model info - check ALL inputs and outputs
+      print('   📥 Input count: ${_interpreter!.getInputTensors().length}');
+      _outputCount = _interpreter!.getOutputTensors().length;
+      print('   📤 Output count: $_outputCount');
+      
+      final inputTensor = _interpreter!.getInputTensor(0);
+      print('   📥 Input[0] shape: ${inputTensor.shape}');
+      print('   📥 Input[0] type: ${inputTensor.type}');
+      
+      // Print all output shapes (U2-Net has 7 outputs: d1-d7)
+      for (int i = 0; i < _outputCount; i++) {
+        final outTensor = _interpreter!.getOutputTensor(i);
+        print('   📤 Output[$i] shape: ${outTensor.shape}, type: ${outTensor.type}');
+      }
+      
+    } catch (e, stackTrace) {
+      print('❌ Failed to load U2-Net model: $e');
+      print('   Stack: $stackTrace');
+    }
+    
+    if (_interpreter == null) {
+      print('⚠️ U2-Net model not loaded. Background removal will fail.');
     }
   }
 
   /// Remove background from an image file
-  Future<File> removeBackground(File imageFile) async {
+  /// Returns a BackgroundRemovalResult with the processed image and foreground ratio
+  Future<BackgroundRemovalResult> removeBackground(File imageFile) async {
     await initialize();
 
     final originalImage = img.decodeImage(await imageFile.readAsBytes());
@@ -33,14 +88,24 @@ class BackgroundRemovalService {
       throw Exception('Failed to decode image');
     }
 
-    img.Image processedImage;
+    if (_interpreter == null) {
+      throw Exception('❌ U2-Net model not loaded! Cannot process image.');
+    }
 
-    if (_interpreter != null) {
-      // U2-Net model ile background removal
-      processedImage = await _removeBackgroundWithU2Net(originalImage);
-    } else {
-      // Fallback: Simple color-based segmentation
-      processedImage = _removeBackgroundSimple(originalImage);
+    // U2-Net model ile background removal
+    final (processedImage, foregroundRatio) = await _removeBackgroundWithU2Net(originalImage);
+    
+    // Check if foreground ratio is too low (too much background removed = likely failed segmentation)
+    if (foregroundRatio < minForegroundRatio) {
+      print('⚠️ Foreground ratio too low (${(foregroundRatio * 100).toStringAsFixed(1)}% < ${(minForegroundRatio * 100).toStringAsFixed(0)}%)');
+      print('   📸 Too much background removed - using original image instead');
+      
+      // Return original image with a flag indicating fallback
+      return BackgroundRemovalResult(
+        processedImage: imageFile,
+        foregroundRatio: foregroundRatio,
+        usedOriginal: true,
+      );
     }
 
     // Save processed image to app directory
@@ -94,155 +159,155 @@ class BackgroundRemovalService {
     print('   adb shell ls $testImagesPath');
     print('   adb pull $testImagesPath ./test_images/');
 
-    return processedFile;
+    return BackgroundRemovalResult(
+      processedImage: processedFile,
+      foregroundRatio: foregroundRatio,
+      usedOriginal: false,
+    );
   }
 
   /// U2-Net model ile background removal (TFLite)
-  Future<img.Image> _removeBackgroundWithU2Net(img.Image image) async {
-    // Resize image to model input size (320x320 for U2-Net)
-    final resized = img.copyResize(image, width: 320, height: 320);
-
-    // Prepare input tensor
-    final input = _imageToByteListFloat32(resized, 320, 320);
-
-    // Prepare output tensor
-    final output = List.filled(1 * 320 * 320 * 1, 0.0).reshape([1, 320, 320, 1]);
-
-    // Run inference
-    _interpreter!.run(input, output);
-
-    // Create mask from output
-    final mask = _outputToMask(output[0], 320, 320);
-
-    // Apply mask to original image
-    return _applyMask(image, mask);
-  }
-
-  /// Simple color-based background removal (fallback) - BLACK background
-  img.Image _removeBackgroundSimple(img.Image image) {
-    print('Using simple background removal (fallback method)');
+  /// Python scriptindeki preprocessing/postprocessing adımlarının birebir uygulaması
+  /// Returns (processedImage, foregroundRatio)
+  Future<(img.Image, double)> _removeBackgroundWithU2Net(img.Image image) async {
+    print('🔄 Starting U2-Net background removal...');
+    print('   Original size: ${image.width}x${image.height}');
     
-    // Create result with black background
-    final result = img.Image(width: image.width, height: image.height);
+    try {
+      // Step 1: Resize image to model input size (320x320 for U2-Net)
+      final resized = img.copyResize(image, width: 320, height: 320);
+      print('   Resized to: 320x320');
 
-    // Simple green screen removal or edge detection
-    for (int y = 0; y < image.height; y++) {
-      for (int x = 0; x < image.width; x++) {
-        final pixel = image.getPixel(x, y);
-        
-        final r = pixel.r.toInt();
-        final g = pixel.g.toInt();
-        final b = pixel.b.toInt();
-
-        // Check if pixel is likely background (white/gray)
-        final isBackground = _isBackgroundColor(r, g, b);
-
-        if (isBackground) {
-          // Make it BLACK (PlantVillage style)
-          result.setPixelRgba(x, y, 0, 0, 0, 255);
-        } else {
-          // Keep original color
-          result.setPixelRgba(x, y, r, g, b, 255);
-        }
-      }
-    }
-
-    return result;
-  }
-
-  /// Check if color is likely background
-  bool _isBackgroundColor(int r, int g, int b) {
-    // Check for white/light gray backgrounds
-    final isWhite = r > 200 && g > 200 && b > 200;
-    
-    // Check for uniform colors (common in lab photos)
-    final diff1 = (r - g).abs();
-    final diff2 = (r - b).abs();
-    final diff3 = (g - b).abs();
-    final maxDiff = math.max(diff1, math.max(diff2, diff3));
-    final isUniform = maxDiff < 30 && (r + g + b) / 3 > 180;
-
-    return isWhite || isUniform;
-  }
-
-  /// Convert image to Float32 input tensor
-  List<List<List<List<double>>>> _imageToByteListFloat32(img.Image image, int inputWidth, int inputHeight) {
-    final result = List.generate(
-      1,
-      (_) => List.generate(
-        inputHeight,
+      // Step 2: Prepare input tensor with ImageNet normalization
+      // Input shape: [1, 320, 320, 3] - use num type as in official examples
+      final imageMatrix = List.generate(
+        320,
         (y) => List.generate(
-          inputWidth,
+          320,
           (x) {
-            final pixel = image.getPixel(x, y);
-            return [
-              (pixel.r.toInt() - 127.5) / 127.5,
-              (pixel.g.toInt() - 127.5) / 127.5,
-              (pixel.b.toInt() - 127.5) / 127.5,
-            ];
+            final pixel = resized.getPixel(x, y);
+            // ImageNet normalization
+            const meanR = 0.485, meanG = 0.456, meanB = 0.406;
+            const stdR = 0.229, stdG = 0.224, stdB = 0.225;
+            final r = (pixel.r.toInt() / 255.0 - meanR) / stdR;
+            final g = (pixel.g.toInt() / 255.0 - meanG) / stdG;
+            final b = (pixel.b.toInt() / 255.0 - meanB) / stdB;
+            return [r, g, b];
           },
         ),
-      ),
-    );
+      );
+      // Input as list for runForMultipleInputs
+      final inputs = [[imageMatrix]];
+      print('   Input tensor prepared');
 
-    return result;
+      // U2-Net has multiple outputs (d1, d2, d3, d4, d5, d6, d7)
+      // We need to create a buffer for EACH output, but only use d1 (index 0)
+      print('   Preparing $_outputCount output buffers...');
+      final outputs = <int, Object>{};
+      for (int i = 0; i < _outputCount; i++) {
+        final shape = _interpreter!.getOutputTensor(i).shape;
+        // Create output buffer matching each tensor's shape
+        outputs[i] = List.filled(shape[0] * shape[1] * shape[2] * shape[3], 0.0)
+            .reshape([shape[0], shape[1], shape[2], shape[3]]);
+      }
+      print('   Output buffers prepared for $_outputCount outputs');
+
+      // Run inference with runForMultipleInputs (required for multi-output models)
+      print('   Running model inference with runForMultipleInputs...');
+      _interpreter!.runForMultipleInputs(inputs, outputs);
+      print('   ✅ Model inference completed');
+      
+      // Get the first output (d1 - main mask)
+      final output = outputs[0] as List<dynamic>;
+      
+      // Debug: check output values at center
+      print('   Sample output value at center: ${output[0][160][160][0]}');
+
+      // Step 3: Apply sigmoid and create mask
+      print('   Creating mask with sigmoid...');
+      final mask = _outputToMask(output[0], 320, 320);
+      print('   ✅ Mask created');
+
+      // Step 4: Apply mask to original image
+      print('   Applying mask to original image...');
+      final (result, foregroundRatio) = _applyMaskWithResize(image, mask);
+      print('   ✅ Background removal completed');
+      return (result, foregroundRatio);
+      
+    } catch (e, stackTrace) {
+      print('❌ ERROR in _removeBackgroundWithU2Net: $e');
+      print('   Stack trace: $stackTrace');
+      rethrow;
+    }
   }
-
-  /// Convert model output to binary mask
-  List<List<double>> _outputToMask(List output, int width, int height) {
+  
+  /// Convert output tensor to mask
+  /// Note: TFLite model output is already in [0, 1] range (sigmoid already applied internally)
+  List<List<double>> _outputToMask(List<dynamic> output, int width, int height) {
     final mask = List.generate(height, (_) => List<double>.filled(width, 0.0));
 
-    // Find min and max for normalization
     double minVal = double.infinity;
     double maxVal = double.negativeInfinity;
+    
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
-        final val = output[y][x][0] as double;
-        if (val < minVal) minVal = val;
-        if (val > maxVal) maxVal = val;
+        final value = (output[y][x][0] as num).toDouble();
+        
+        if (value < minVal) minVal = value;
+        if (value > maxVal) maxVal = value;
+        
+        // No sigmoid needed - output is already 0-1 probability
+        mask[y][x] = value;
       }
     }
     
-    final range = maxVal - minVal;
-    print('🎭 Mask range: min=$minVal, max=$maxVal');
-
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        // Normalize and threshold
-        final normalized = range > 0 ? (output[y][x][0] - minVal) / range : 0.5;
-        // Values > 0.5 are foreground (leaf)
-        mask[y][x] = normalized > 0.5 ? 1.0 : 0.0;
-      }
-    }
+    print('   📊 Output range: [$minVal, $maxVal]');
 
     return mask;
   }
 
-  /// Apply mask to original image with BLACK background (PlantVillage style)
-  img.Image _applyMask(img.Image original, List<List<double>> mask) {
+  /// Apply mask to original image with proper resizing
+  /// Uses bilinear-like interpolation for smoother edges
+  /// Returns (resultImage, foregroundRatio)
+  (img.Image, double) _applyMaskWithResize(img.Image original, List<List<double>> mask) {
     final maskHeight = mask.length;
     final maskWidth = mask[0].length;
-
+    
     // Create result with black background
     final result = img.Image(width: original.width, height: original.height);
-    
-    // Fill with black first
-    for (int y = 0; y < result.height; y++) {
-      for (int x = 0; x < result.width; x++) {
-        result.setPixelRgba(x, y, 0, 0, 0, 255);
-      }
-    }
 
+    // Threshold for binary mask (can adjust 0.5 if needed)
+    const threshold = 0.5;
+    
     int foregroundPixels = 0;
+    int totalPixels = original.width * original.height;
+    
     for (int y = 0; y < original.height; y++) {
       for (int x = 0; x < original.width; x++) {
-        // Map coordinates to mask
-        final maskY = (y * maskHeight / original.height).floor().clamp(0, maskHeight - 1);
-        final maskX = (x * maskWidth / original.width).floor().clamp(0, maskWidth - 1);
-
-        final maskValue = mask[maskY][maskX];
+        // Map coordinates to mask with bilinear-like sampling
+        final maskYf = y * (maskHeight - 1) / (original.height - 1);
+        final maskXf = x * (maskWidth - 1) / (original.width - 1);
         
-        if (maskValue > 0.5) {
+        final maskY0 = maskYf.floor().clamp(0, maskHeight - 1);
+        final maskX0 = maskXf.floor().clamp(0, maskWidth - 1);
+        final maskY1 = (maskY0 + 1).clamp(0, maskHeight - 1);
+        final maskX1 = (maskX0 + 1).clamp(0, maskWidth - 1);
+        
+        final fy = maskYf - maskY0;
+        final fx = maskXf - maskX0;
+        
+        // Bilinear interpolation
+        final v00 = mask[maskY0][maskX0];
+        final v01 = mask[maskY0][maskX1];
+        final v10 = mask[maskY1][maskX0];
+        final v11 = mask[maskY1][maskX1];
+        
+        final maskValue = v00 * (1 - fx) * (1 - fy) +
+                          v01 * fx * (1 - fy) +
+                          v10 * (1 - fx) * fy +
+                          v11 * fx * fy;
+        
+        if (maskValue > threshold) {
           // Foreground - keep original pixel
           final pixel = original.getPixel(x, y);
           result.setPixelRgba(
@@ -254,14 +319,18 @@ class BackgroundRemovalService {
             255,
           );
           foregroundPixels++;
+        } else {
+          // Background - black pixel
+          result.setPixelRgba(x, y, 0, 0, 0, 255);
         }
-        // Background pixels stay black
       }
     }
     
-    print('🌿 Foreground pixels: $foregroundPixels / ${original.width * original.height}');
+    final foregroundRatio = foregroundPixels / totalPixels;
+    final percentage = (foregroundRatio * 100).toStringAsFixed(1);
+    print('   🌿 Foreground: $foregroundPixels / $totalPixels ($percentage%)');
 
-    return result;
+    return (result, foregroundRatio);
   }
 
   void dispose() {
