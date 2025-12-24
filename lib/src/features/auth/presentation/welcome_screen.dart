@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:plant_disease_detector/src/features/auth/providers/auth_provider.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends ConsumerWidget {
   const WelcomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
+    final authState = ref.watch(authProvider);
+
+    // Listen for auth state changes
+    ref.listen<AuthState>(authProvider, (previous, next) {
+      if (next.status == AuthStatus.authenticated || next.status == AuthStatus.guest) {
+        context.go('/home');
+      }
+      if (next.errorMessage != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(next.errorMessage!),
+            backgroundColor: Colors.red,
+          ),
+        );
+        ref.read(authProvider.notifier).clearError();
+      }
+    });
 
     return Scaffold(
       body: Stack(
@@ -92,8 +111,8 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
                   ElevatedButton(
-                    onPressed: () {
-                      context.go('/home');
+                    onPressed: authState.isLoading ? null : () {
+                      context.push('/auth/signup');
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF13ec25), // Primary Green
@@ -105,14 +124,14 @@ class WelcomeScreen extends StatelessWidget {
                       elevation: 0,
                     ),
                     child: const Text(
-                      'Create Account',
+                      'Hesap Oluştur',
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
                   const SizedBox(height: 12),
                   TextButton(
-                    onPressed: () {
-                      context.go('/home');
+                    onPressed: authState.isLoading ? null : () {
+                      context.push('/auth/login');
                     },
                     style: TextButton.styleFrom(
                       backgroundColor: isDark
@@ -125,13 +144,13 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                     ),
                     child: const Text(
-                      'Log In',
+                      'Giriş Yap',
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                     ),
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'Or continue with:',
+                    'Veya şununla devam et:',
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: theme.colorScheme.onSurface.withOpacity(0.6),
                     ),
@@ -143,14 +162,18 @@ class WelcomeScreen extends StatelessWidget {
                     children: [
                       _buildSocialButton(
                         context,
-                        icon: Icons.g_mobiledata, // Placeholder for Google
+                        ref,
+                        icon: Icons.g_mobiledata,
                         label: 'Google',
+                        onTap: () => ref.read(authProvider.notifier).signInWithGoogle(),
+                        isLoading: authState.isLoading,
                       ),
                       const SizedBox(width: 16),
-                      _buildSocialButton(
+                      _buildGuestButton(
                         context,
-                        icon: Icons.apple,
-                        label: 'Apple',
+                        ref,
+                        onTap: () => ref.read(authProvider.notifier).continueAsGuest(),
+                        isLoading: authState.isLoading,
                       ),
                     ],
                   ),
@@ -207,7 +230,14 @@ class WelcomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSocialButton(BuildContext context, {required IconData icon, required String label}) {
+  Widget _buildSocialButton(
+    BuildContext context,
+    WidgetRef ref, {
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+    required bool isLoading,
+  }) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     
@@ -222,9 +252,36 @@ class WelcomeScreen extends StatelessWidget {
         color: isDark ? const Color(0xFF102212) : Colors.white,
       ),
       child: IconButton(
-        onPressed: () {},
+        onPressed: isLoading ? null : onTap,
         icon: Icon(icon, color: theme.colorScheme.onSurface),
-        tooltip: 'Sign in with $label',
+        tooltip: '$label ile giriş yap',
+      ),
+    );
+  }
+
+  Widget _buildGuestButton(
+    BuildContext context,
+    WidgetRef ref, {
+    required VoidCallback onTap,
+    required bool isLoading,
+  }) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    
+    return Container(
+      width: 50,
+      height: 50,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: isDark ? Colors.grey[700]! : Colors.grey[300]!,
+        ),
+        color: isDark ? const Color(0xFF102212) : Colors.white,
+      ),
+      child: IconButton(
+        onPressed: isLoading ? null : onTap,
+        icon: Icon(Icons.person_outline, color: theme.colorScheme.onSurface),
+        tooltip: 'Misafir olarak devam et',
       ),
     );
   }

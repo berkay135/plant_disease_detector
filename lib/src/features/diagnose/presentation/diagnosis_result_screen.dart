@@ -1,12 +1,15 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:plant_disease_detector/src/core/theme/app_theme.dart';
+import 'package:plant_disease_detector/src/core/services/diagnosis_save_service.dart';
+import 'package:plant_disease_detector/src/features/auth/providers/auth_provider.dart';
 import 'package:plant_disease_detector/src/features/diagnose/data/plant_disease_info.dart';
 import 'package:plant_disease_detector/src/features/diagnose/data/plant_disease_repository.dart';
 import 'package:plant_disease_detector/src/features/diagnose/data/diagnosis_history.dart';
 
-class DiagnosisResultScreen extends StatefulWidget {
+class DiagnosisResultScreen extends ConsumerStatefulWidget {
   final String imagePath;
   final String label;
   final double confidence;
@@ -19,10 +22,10 @@ class DiagnosisResultScreen extends StatefulWidget {
   });
 
   @override
-  State<DiagnosisResultScreen> createState() => _DiagnosisResultScreenState();
+  ConsumerState<DiagnosisResultScreen> createState() => _DiagnosisResultScreenState();
 }
 
-class _DiagnosisResultScreenState extends State<DiagnosisResultScreen> {
+class _DiagnosisResultScreenState extends ConsumerState<DiagnosisResultScreen> {
   final PlantDiseaseRepository _repository = PlantDiseaseRepository();
   PlantDiseaseInfo? _diseaseInfo;
   bool _isLoading = true;
@@ -46,6 +49,7 @@ class _DiagnosisResultScreenState extends State<DiagnosisResultScreen> {
         
         // Add to history if disease info loaded successfully
         if (info != null) {
+          // Legacy history (SharedPreferences)
           DiagnosisHistory().addDiagnosis(
             DiagnosisHistoryItem(
               imagePath: widget.imagePath,
@@ -54,6 +58,17 @@ class _DiagnosisResultScreenState extends State<DiagnosisResultScreen> {
               diseaseInfo: info,
               timestamp: DateTime.now(),
             ),
+          );
+          
+          // New Hive storage + Cloud sync
+          final user = ref.read(currentUserProvider);
+          final saveService = ref.read(diagnosisSaveServiceProvider);
+          await saveService.saveDiagnosis(
+            diseaseId: info.id,
+            label: widget.label,
+            confidence: widget.confidence,
+            localImagePath: widget.imagePath,
+            userId: user?.id,
           );
         }
       }
