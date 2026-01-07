@@ -18,4 +18,8 @@ class SupabaseConfig {
   /// Get this from Google Cloud Console > Credentials > OAuth 2.0 Client IDs
   /// Use the Web application client ID (not Android)
   static const String googleClientId = '278132602020-rk37g7spj4hism6n0hhu3n1mn2vomo48.apps.googleusercontent.com';
+  
+  /// Google Gemini AI API Key
+  /// Get this from Google AI Studio: https://aistudio.google.com/app/apikey
+  static const String geminiApiKey = 'AIzaSyCE7A6KC4U9aOHlcvjKV7FAZ7Jh8zR5b78';
 }

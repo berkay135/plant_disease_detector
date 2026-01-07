@@ -47,7 +47,7 @@ class AuthRepository {
         createdAt: DateTime.now(),
       );
       
-      await _supabase.from('profiles').insert(user.toJson());
+      await _supabase.from('profiles').upsert(user.toJson());
       await LocalStorageService.saveCurrentUser(user);
       
       print('✅ User signed up: ${user.email}');
@@ -96,7 +96,7 @@ class AuthRepository {
           role: UserRole.user,
           createdAt: DateTime.now(),
         );
-        await _supabase.from('profiles').insert(user.toJson());
+        await _supabase.from('profiles').upsert(user.toJson());
         await LocalStorageService.saveCurrentUser(user);
         return user;
       }
@@ -156,7 +156,7 @@ class AuthRepository {
           role: UserRole.user,
           createdAt: DateTime.now(),
         );
-        await _supabase.from('profiles').insert(user.toJson());
+        await _supabase.from('profiles').upsert(user.toJson());
       }
       
       await LocalStorageService.saveCurrentUser(user);

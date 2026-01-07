@@ -16,6 +16,7 @@ import 'package:plant_disease_detector/src/features/settings/presentation/edit_p
 import 'package:plant_disease_detector/src/features/garden/presentation/garden_screen.dart';
 import 'package:plant_disease_detector/src/features/garden/presentation/add_plant_screen.dart';
 import 'package:plant_disease_detector/src/features/garden/presentation/plant_detail_screen.dart';
+import 'package:plant_disease_detector/src/features/chat/presentation/plant_chat_screen.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
   final authState = ref.watch(authProvider);
@@ -122,6 +123,12 @@ final routerProvider = Provider<GoRouter>((ref) {
         },
       ),
       
+      // Chat route
+      GoRoute(
+        path: '/chat',
+        builder: (context, state) => const PlantChatScreen(),
+      ),
+      
       // Shell route with bottom navigation
       ShellRoute(
         builder: (context, state, child) {
@@ -155,32 +162,103 @@ class _AuthStateNotifier extends ChangeNotifier {
   final Ref ref;
 }
 
-class ScaffoldWithBottomNavBar extends StatelessWidget {
+class ScaffoldWithBottomNavBar extends StatefulWidget {
   const ScaffoldWithBottomNavBar({super.key, required this.child});
 
   final Widget child;
 
   @override
+  State<ScaffoldWithBottomNavBar> createState() => _ScaffoldWithBottomNavBarState();
+}
+
+class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
+  late PageController _pageController;
+  int _currentIndex = 0;
+  
+  final List<Widget> _pages = const [
+    HomeScreen(),
+    GardenScreen(),
+    SettingsScreen(),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: _currentIndex);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Sync page with current route
+    final newIndex = _calculateSelectedIndex(context);
+    if (newIndex != _currentIndex) {
+      _currentIndex = newIndex;
+      if (_pageController.hasClients) {
+        _pageController.jumpToPage(_currentIndex);
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final isHome = GoRouterState.of(context).uri.path.startsWith('/home');
-    
     return Scaffold(
-      body: child,
-      floatingActionButton: isHome
-          ? FloatingActionButton(
-              heroTag: 'camera_fab',
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+          _navigateToPage(index, context);
+        },
+        children: _pages,
+      ),
+      floatingActionButton: _currentIndex == 0
+          ? Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Chat button (top right when there's a camera button)
+                FloatingActionButton(
+                  heroTag: 'chat_fab',
+                  onPressed: () {
+                    context.push('/chat');
+                  },
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  mini: true,
+                  child: const Icon(Icons.smart_toy, color: Colors.white),
+                ),
+                const SizedBox(height: 12),
+                // Camera button
+                FloatingActionButton(
+                  heroTag: 'camera_fab',
+                  onPressed: () {
+                    context.push('/diagnose');
+                  },
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  child: const Icon(Icons.camera_alt, color: Colors.white),
+                ),
+              ],
+            )
+          : FloatingActionButton(
+              heroTag: 'chat_fab_only',
               onPressed: () {
-                context.push('/diagnose');
+                context.push('/chat');
               },
               backgroundColor: Theme.of(context).colorScheme.primary,
-              child: const Icon(Icons.camera_alt, color: Colors.white),
-            )
-          : null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+              mini: true,
+              child: const Icon(Icons.smart_toy, color: Colors.white),
+            ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        currentIndex: _calculateSelectedIndex(context),
-        onTap: (int idx) => _onItemTapped(idx, context),
+        currentIndex: _currentIndex,
+        onTap: (int idx) => _onItemTapped(idx),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.history_outlined),
@@ -216,7 +294,19 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
     return 0;
   }
 
-  void _onItemTapped(int index, BuildContext context) {
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+    _pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+    _navigateToPage(index, context);
+  }
+  
+  void _navigateToPage(int index, BuildContext context) {
     switch (index) {
       case 0:
         GoRouter.of(context).go('/home');

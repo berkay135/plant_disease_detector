@@ -34,7 +34,7 @@ class SettingsScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: const Text('Ayarlar'),
       ),
       body: ListView(
         children: [

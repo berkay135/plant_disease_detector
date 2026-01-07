@@ -16,7 +16,7 @@ class GardenScreen extends ConsumerWidget {
     
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bahçem 🌱'),
+        title: const Text('Bahçem'),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),

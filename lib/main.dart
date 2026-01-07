@@ -9,6 +9,7 @@ import 'package:plant_disease_detector/src/core/storage/local_storage_service.da
 import 'package:plant_disease_detector/src/core/supabase/supabase_config.dart';
 import 'package:plant_disease_detector/src/core/services/notification_service.dart';
 import 'package:plant_disease_detector/src/core/services/image_cache_service.dart';
+import 'package:plant_disease_detector/src/core/services/plant_ai_service.dart';
 import 'package:plant_disease_detector/src/features/diagnose/data/diagnosis_history.dart';
 
 void main() async {
@@ -26,6 +27,9 @@ void main() async {
   // Initialize notification service
   await NotificationService().initialize();
   await NotificationService().requestPermissions();
+  
+  // Initialize Plant AI service (Gemini)
+  PlantAIService.instance.initialize(SupabaseConfig.geminiApiKey);
   
   // Initialize Supabase
   await Supabase.initialize(

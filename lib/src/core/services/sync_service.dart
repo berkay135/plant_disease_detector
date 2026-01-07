@@ -115,22 +115,21 @@ class SyncService {
       
       final historyBox = LocalStorageService.historyBox;
       
-      // Get existing local item IDs
-      final localIds = historyBox.values.map((e) => e.id).toSet();
-      print('📱 Local diagnosis items: ${localIds.length}');
+      // Clear existing local items for this user to avoid duplicates
+      final existingItems = historyBox.values.where((e) => e.userId == userId).toList();
+      print('📱 Clearing ${existingItems.length} local diagnosis items for fresh sync');
+      for (var item in existingItems) {
+        await item.delete();
+      }
       
       int newItemsCount = 0;
       
       for (var json in cloudItems) {
         final itemId = json['id'] as String;
-        
-        // Only add if not already local
-        if (!localIds.contains(itemId)) {
-          final item = DiagnosisHistoryItemCache.fromSupabase(json);
-          await historyBox.add(item);
-          newItemsCount++;
-          print('✅ Downloaded diagnosis: $itemId');
-        }
+        final item = DiagnosisHistoryItemCache.fromSupabase(json);
+        await historyBox.add(item);
+        newItemsCount++;
+        print('✅ Downloaded diagnosis: $itemId');
       }
       
       print('✅ Synced $newItemsCount diagnosis items from cloud');

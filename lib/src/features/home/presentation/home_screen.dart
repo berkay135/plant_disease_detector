@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
           'Teşhislerim',
           style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
-        centerTitle: true,
+        centerTitle: false,
         actions: [
           if (items.isNotEmpty)
             IconButton(

@@ -250,7 +250,7 @@ class _PlantIdentificationScreenState extends State<PlantIdentificationScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          'Identify Plant',
+                          'Hastalığı Tespit Et',
                           textAlign: TextAlign.center,
                           style: theme.textTheme.titleLarge?.copyWith(
                             fontWeight: FontWeight.bold,
@@ -291,7 +291,7 @@ class _PlantIdentificationScreenState extends State<PlantIdentificationScreen> {
                                   ),
                                   const SizedBox(height: 16),
                                   Text(
-                                    'Take a clear photo',
+                                    'Net bir fotoğraf çekin',
                                     style: theme.textTheme.titleMedium?.copyWith(
                                       fontWeight: FontWeight.w500,
                                       color: theme.colorScheme.onSurface.withOpacity(0.8),
@@ -299,7 +299,7 @@ class _PlantIdentificationScreenState extends State<PlantIdentificationScreen> {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    'Frame the diseased part of your plant\nwithin the box.',
+                                    'Hastalıklı olduğunu düşündüğünüz\n yaprağı ortalayın',
                                     textAlign: TextAlign.center,
                                     style: theme.textTheme.bodySmall?.copyWith(
                                       color: theme.colorScheme.onSurface.withOpacity(0.6),
