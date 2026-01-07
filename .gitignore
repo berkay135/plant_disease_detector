@@ -44,3 +44,8 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 test_background_removal.py
+
+# Environment variables
+.env
+*.env
+!.env.example
