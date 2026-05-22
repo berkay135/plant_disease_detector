@@ -43,9 +43,21 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+android/.gradle/
+android/build/
+**/build/
+*.apk
+*.aab
+*.jks
+*.keystore
+android/key.properties
+local.properties
 test_background_removal.py
 
 # Environment variables
 .env
 *.env
 !.env.example
+
+# Local/generated documentation helpers
+tmp/
